@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>متجر أبو علي</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:white;font-family:Arial,sans-serif}
+header{padding:22px 16px;background:#141d33;text-align:center;border-bottom:2px solid #7957ff}
+header h1{margin:0;color:#bba8ff}
+header p{color:#ccd2e4}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:14px}
+button{cursor:pointer;border:0;border-radius:10px;padding:11px 15px;background:#7957ff;color:white;font-weight:bold}
+main{padding:12px;max-width:900px;margin:auto}
+input{width:100%;padding:14px;border:1px solid #39435e;border-radius:12px;background:#141d33;color:white;font-size:16px}
+h2{font-size:20px}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:#141d33;border:1px solid #293651;border-radius:15px;padding:14px}
+.pic{font-size:36px;text-align:center;padding:12px}
+.card h3{font-size:16px}
+.price{color:#bba8ff;font-weight:bold}
+.card button{width:100%}
+.note{background:#182541;padding:14px;border-radius:12px;line-height:1.8;margin:18px 0}
+footer{text-align:center;padding:24px;color:#aeb8d0}
+@media(min-width:600px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header>
+<h1>متجر أبو علي</h1>
+<p>كل احتياجاتك الرقمية بمكان واحد</p>
+</header>
+<nav>
+<button onclick="show('الكل')">كل المنتجات</button>
+<button onclick="show('ألعاب')">الألعاب</button>
+<button onclick="show('شحن')">بطاقات الشحن</button>
+<button onclick="show('تطبيقات')">التطبيقات</button>
+</nav>
+<main>
+<input id="search" placeholder="ابحث عن منتج..." oninput="render()">
+<h2 id="heading">منتجات المتجر</h2>
+<div class="products" id="products"></div>
+<div class="note">
+<strong>أهلاً بك في متجر أبو علي</strong><br>
+هذا إصدار تجريبي. الأسعار والمنتجات أمثلة فقط، والشراء والدفع غير مفعّلين حالياً.
+</div>
+</main>
+<footer>© متجر أبو علي 2026</footer>
+<script>
+const items=[
+{name:'بطاقة ألعاب تجريبية',cat:'ألعاب',price:'يحدد لاحقاً',pic:'🎮'},
+{name:'بطاقة شحن تجريبية',cat:'شحن',price:'يحدد لاحقاً',pic:'💳'},
+{name:'تطبيقات مميزة',cat:'تطبيقات',price:'يحدد لاحقاً',pic:'📱'},
+{name:'رصيد ألعاب تجريبي',cat:'ألعاب',price:'يحدد لاحقاً',pic:'🕹️'},
+{name:'بطاقة رقمية تجريبية',cat:'شحن',price:'يحدد لاحقاً',pic:'🎁'},
+{name:'أدوات وتطبيقات',cat:'تطبيقات',price:'يحدد لاحقاً',pic:'✨'}
+];
+let category='الكل';
+function show(c){category=c;document.getElementById('heading').textContent=c==='الكل'?'منتجات المتجر':c;render()}
+function render(){
+const q=document.getElementById('search').value.trim().toLowerCase();
+const list=items.filter(x=>(category==='الكل'||x.cat===category)&&x.name.toLowerCase().includes(q));
+document.getElementById('products').innerHTML=list.map(x=>`
+<div class="card">
+<div class="pic">${x.pic}</div>
+<h3>${x.name}</h3>
+<p class="price">${x.price}</p>
+<button onclick="alert('هذا منتج تجريبي. الطلب غير مفعّل حالياً.')">عرض المنتج</button>
+</div>`).join('');
+}
+render();
+</script>
+</body>
+</html>
